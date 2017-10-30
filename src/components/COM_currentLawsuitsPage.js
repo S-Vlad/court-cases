@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 
-export default class CurrentLawsuits extends Component {
+export default class CurrentLawsuitsPage extends Component {
   componentDidMount() {
-    this.props.getLawsuits(true);
+    this.props.getLawsuits(false);
   }
 
   render() {
@@ -26,7 +26,7 @@ export default class CurrentLawsuits extends Component {
     }
 
     return(
-      <main>
+      <div>
         <h3>Судебные дела</h3>
         <table className='table table-bordered'>
           <thead>
@@ -41,7 +41,7 @@ export default class CurrentLawsuits extends Component {
             {template}
           </tbody>
         </table>
-      </main>
+      </div>
     );
   }
 }

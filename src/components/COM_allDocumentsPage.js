@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 
 
-export default class AllLawsuitsPage extends Component {
+export default class AllDocumentsPage extends Component {
   componentDidMount() {
-    this.props.getLawsuits(true);
+    this.props.getDocuments();
   }
 
   render() {
     const props = this.props;
     let template = [];
 
-    if (props.lawsuits.data) {
-      const data = props.lawsuits.data;
+    if (props.documents.data) {
+      const data = props.documents.data;
 
       template = data.map((item, index) => {
         return(
           <tr key={index}>
-            <td>{item.claimant}</td>
-            <td>{item.respondent}</td>
-            <td>{item.state}</td>
-            <td>{item.document_id}</td>
+            <td>{item.name}</td>
+            <td>{item.type}</td>
           </tr>
         );
       });
@@ -27,14 +25,12 @@ export default class AllLawsuitsPage extends Component {
 
     return(
       <div>
-        <h3>Текущие судебные дела</h3>
+        <h3>Документы</h3>
         <table className='table table-bordered'>
           <thead>
             <tr>
-              <th>Истец</th>
-              <th>Ответчик</th>
-              <th>Статус</th>
-              <th>Статья</th>
+              <th>Название</th>
+              <th>Тип</th>
             </tr>
           </thead>
           <tbody>

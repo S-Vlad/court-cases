@@ -2,7 +2,7 @@ import { /*GET_LAWSUITS_REQUEST,*/ GET_LAWSUITS_SUCCESS } from '../constants/CON
 
 
 const initialState = {
-  fetching: false
+  /*fetching: false*/
 }
 
 export default function lawsuits(state = initialState, action) {
@@ -11,7 +11,7 @@ export default function lawsuits(state = initialState, action) {
     //   return {...state, fetching: true};
 
     case GET_LAWSUITS_SUCCESS:
-      return {...state, data: action.payload, fetching: false};
+      return {...state, data: action.payload/*, fetching: false*/};
 
     default:
       return state;
