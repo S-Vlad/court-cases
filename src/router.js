@@ -13,7 +13,7 @@ export default (
       <Switch>
         <Route path='/current-lawsuits' component={Lawsuits} />
         <Route path='/lawsuits' component={Lawsuits} />
-        <Route path='/documents' component={Documents} />
+        <Route exact path='/documents' component={Documents} />
         <Route exact path='/documents/:document' component={Documents} />
         <Redirect exact from='/' to='/current-lawsuits' /> {/*перенаправление на нужную страницу*/}
         <Route path='*' component={NotFoundPage}/>

@@ -14,13 +14,14 @@ class Documents extends Component {
     let template,
         ChildElement;
 
-    if (this.props.location.pathname === '/documents') {
+    if (this.props.location.pathname === '/documents' ||
+        this.props.location.pathname === '/documents/') {
       ChildElement = AllDocumentsPage;
     } else {
       ChildElement = CurrentDocumentPage;
     }
 
-    template = (<ChildElement documents={documents} getDocuments={getDocuments} />);
+    template = (<ChildElement documents={documents} getDocuments={getDocuments} location={this.props.match.params.document}/>);
 
     return(
       <main>

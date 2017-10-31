@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default class AllDocumentsPage extends Component {
@@ -16,7 +17,7 @@ export default class AllDocumentsPage extends Component {
       template = data.map((item, index) => {
         return(
           <tr key={index}>
-            <td>{item.name}</td>
+            <td><Link to={`/documents/${item.id}`}>{item.name}</Link></td>
             <td>{item.type}</td>
           </tr>
         );
