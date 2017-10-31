@@ -14,12 +14,29 @@ export default class CurrentLawsuitsPage extends Component {
       const data = props.lawsuits.data;
 
       template = data.map((item, index) => {
+
+        let claimant,
+            respondent,
+            judge,
+            participants = item.participants_id;
+
+        participants.forEach((item) => {
+          if (item.type === 'Истец') {
+            claimant = item;
+          } else if (item.type === 'Ответчик') {
+            respondent = item;
+          } else {
+            judge = item;
+          }
+        });
+
         return(
           <tr key={index}>
-            <td>{item.claimant}</td>
-            <td>{item.respondent}</td>
+            <td>{claimant.name}</td>
+            <td>{respondent.name}</td>
+            <td>{judge.name}</td>
             <td>{item.state}</td>
-            <td>{item.document_id}</td>
+            <td>{item.documents_id[0].name}</td>
           </tr>
         )
       });
@@ -33,6 +50,7 @@ export default class CurrentLawsuitsPage extends Component {
             <tr>
               <th>Истец</th>
               <th>Ответчик</th>
+              <th>Судья</th>
               <th>Статус</th>
               <th>Статья</th>
             </tr>

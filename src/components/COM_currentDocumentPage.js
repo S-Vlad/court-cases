@@ -17,7 +17,7 @@ export default class CurrentDocumentsPage extends Component {
       template = data.map((item, index) => {
         return(
           <div className='text-center' key={index}>
-            <h4>{item.name}</h4>
+            <h4>{item.documents_id[0].name}</h4>
           </div>
         );
       });

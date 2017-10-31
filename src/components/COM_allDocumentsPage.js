@@ -17,8 +17,8 @@ export default class AllDocumentsPage extends Component {
       template = data.map((item, index) => {
         return(
           <tr key={index}>
-            <td><Link to={`/documents/${item.id}`}>{item.name}</Link></td>
-            <td>{item.type}</td>
+            <td><Link to={`/documents/${item.id}`}>{item.documents_id[0].name}</Link></td>
+            <td>{item.documents_id[0].type}</td>
           </tr>
         );
       });

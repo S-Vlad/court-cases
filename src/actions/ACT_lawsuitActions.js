@@ -11,6 +11,8 @@ export function getLawsuits(showAllLawsuits) {
     let lawsuitsArray = [];
     let queryBuilder = Backendless.DataQueryBuilder.create();
 
+    queryBuilder.setRelated(['documents_id', 'participants_id', 'schedule_id']);
+
     if (!showAllLawsuits) {
       queryBuilder.setWhereClause("state != 'Завершено'");
     } else {
@@ -20,9 +22,9 @@ export function getLawsuits(showAllLawsuits) {
     Backendless.Data
       .of('Lawsuit')
       .find(queryBuilder)
-      .then((array) => {
-        for (let key in array) {
-          lawsuitsArray.push(array[key]);
+      .then((receivedData) => {
+        for (let key in receivedData) {
+          lawsuitsArray.push(receivedData[key]);
         }
 
         dispatch({
@@ -32,3 +34,5 @@ export function getLawsuits(showAllLawsuits) {
       });
   }
 }
+
+

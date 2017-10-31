@@ -5,8 +5,10 @@ import Backendless from '../backendless.js';
 export function getDocuments(documentId) {
   return (dispatch) => {
 
-    let documentsArray = [];
-    let queryBuilder = Backendless.DataQueryBuilder.create();
+    let documentsArray = [],
+        queryBuilder = Backendless.DataQueryBuilder.create();
+
+    queryBuilder.setRelated(['documents_id'/*, 'participants_id', 'schedule_id'*/]);
 
     if (documentId) {
       queryBuilder.setWhereClause("id =  '"+ documentId + "'");
@@ -15,12 +17,11 @@ export function getDocuments(documentId) {
     }
 
     Backendless.Data
-      .of('Documents')
+      .of('Lawsuit')
       .find(queryBuilder)
-      .then((array) => {
-        if (!array) return;
-        for (let key in array) {
-          documentsArray.push(array[key]);
+      .then((receivedData) => {
+        for (let key in receivedData) {
+          documentsArray.push(receivedData[key]);
         }
 
         dispatch({
