@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default class CurrentLawsuitsPage extends Component {
@@ -13,12 +14,12 @@ export default class CurrentLawsuitsPage extends Component {
     if (props.lawsuits.data) {
       const data = props.lawsuits.data;
 
-      template = data.map((item, index) => {
+      template = data.map((itemTempl, index) => {
 
         let claimant,
             respondent,
             judge,
-            participants = item.participants_id;
+            participants = itemTempl.participants_id;
 
         participants.forEach((item) => {
           if (item.type === 'Истец') {
@@ -32,11 +33,11 @@ export default class CurrentLawsuitsPage extends Component {
 
         return(
           <tr key={index}>
+            <td><Link to={`/current-lawsuit/${itemTempl.objectId}`}>{itemTempl.state}</Link></td>
             <td>{claimant.name}</td>
             <td>{respondent.name}</td>
             <td>{judge.name}</td>
-            <td>{item.state}</td>
-            <td>{item.documents_id[0].name}</td>
+            <td>{itemTempl.documents_id[0].name}</td>
           </tr>
         )
       });
@@ -48,10 +49,10 @@ export default class CurrentLawsuitsPage extends Component {
         <table className='table table-bordered'>
           <thead>
             <tr>
+              <th>Статус</th>
               <th>Истец</th>
               <th>Ответчик</th>
               <th>Судья</th>
-              <th>Статус</th>
               <th>Статья</th>
             </tr>
           </thead>

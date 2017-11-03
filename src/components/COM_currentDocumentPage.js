@@ -1,43 +1,109 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default class CurrentDocumentsPage extends Component {
+  constructor() {
+    super();
+
+    this.editButtonHandler = this.editButtonHandler.bind(this);
+    this.saveButtonHandler = this.saveButtonHandler.bind(this);
+  }
+
   componentDidMount() {
-    this.props.getDocuments(this.props.location);
+    this.props.getDocuments(this.props.location.params.document);
+  }
+
+  // componentWillUnmount() {
+  //   this.props.editDocumentCancel();
+  // }
+
+  editButtonHandler() {
+    this.props.editDocument();
+  }
+
+  saveButtonHandler() {
+    this.props.saveDocument(
+      this.props.documents.data[0].objectId,
+      this.refs
+    );
   }
 
   render() {
-    const props = this.props,
-          data = props.documents.data;
+    const data = this.props.documents.data;
 
-    let template = [];
+    let template,
+        selectTempl;
 
-    if (data && data.length > 0) {
+      if (!this.props.documents.edit || this.props.location.path.indexOf('edit') === -1) {
+        // return(
+          template = data.map((item, index) => {
 
-      template = data.map((item, index) => {
-        return(
-          <div className='text-center' key={index}>
-            <h4>{item.documents_id[0].name}</h4>
-          </div>
-        );
-      });
-    } else {
-      template = (<h4>Такого документа нет</h4>);
-    }
+            return(
+              <div key={index}>
+                <h4 className='text-center'>{item.type}</h4>
+                <h4 className='text-center' >{item.name}</h4>
+                <Link to={`/documents/edit/${item.objectId}`}>
+                  <button
+                    onClick={this.editButtonHandler}
+                    type='button'
+                    className='btn btn-info'>
+                    Редактировать
+                  </button>
+                </Link>
+              </div>
+            )
 
-    if (data && data.length > 0) {
+          })
+        // );
+      } else /*if (this.props.documents.edit && this.props.location.path.indexOf('edit') !== -1)*/ {
+        // return(
+          template = data.map((item, index) => {
+            if (item.type === 'Закон') {
+              selectTempl = (
+                <select ref='saveDocumentSelect' className='form-control'>
+                  <option>Закон</option>
+                  <option>Постановление</option>
+                </select>
+              );
+            } else {
+              selectTempl = (
+                <select ref='saveDocumentSelect' className='form-control'>
+                  <option>Постановление</option>
+                  <option>Закон</option>
+                </select>
+              );
+            }
+
+            return(
+
+              <div key={index}>
+                <textarea
+                  className='document-edit form-control'
+                  defaultValue={item.name}
+                  ref='saveDocumentInput'
+                  rows='4'/>
+                {selectTempl}
+                <Link to={`/documents/${item.objectId}`}>
+                  <button
+                    onClick={this.saveButtonHandler}
+                    type='button'
+                    className='btn btn-info'>
+                    Сохранить
+                  </button>
+                </Link>
+              </div>
+            )
+
+          })
+        // );
+      }
+
       return(
         <div>
           <h3>Документ</h3>
           {template}
         </div>
       );
-    } else {
-      return (
-        <div>
-          {template}
-        </div>
-      );
-    }
   }
 }

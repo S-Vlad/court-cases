@@ -3,24 +3,27 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as lawsuitActions from '../actions/ACT_lawsuitActions.js';
 import AllLawsuitsPage from '../components/COM_allLawsuitsPage.js';
-import CurrentLawsuitsPage from '../components/COM_currentLawsuitsPage.js';
+import OpenLawsuitsPage from '../components/COM_openLawsuitsPage.js';
+import CurrentLawsuitPage from '../components/COM_currentLawsuitPage.js'
 
 
 class Lawsuits extends Component {
   render() {
-    const { getLawsuits } = this.props.lawsuitActions,
+    const { getLawsuits, findLawsuits } = this.props.lawsuitActions,
           { lawsuits } = this.props;
 
     let template,
-      ChildElement;
+        ChildElement;
 
     if (this.props.location.pathname === '/lawsuits') {
       ChildElement = AllLawsuitsPage;
-    } else  {
-      ChildElement = CurrentLawsuitsPage;
+    } else if (this.props.location.pathname === '/open-lawsuits') {
+      ChildElement = OpenLawsuitsPage;
+    } else {
+      ChildElement = CurrentLawsuitPage;
     }
 
-    template = (<ChildElement lawsuits={lawsuits} getLawsuits={getLawsuits} />);
+    template = (<ChildElement lawsuits={lawsuits} getLawsuits={getLawsuits} findLawsuits={findLawsuits} location={this.props.match.params.lawsuit}/>);
 
     return(
       <main>

@@ -19,7 +19,7 @@ export default class Header extends Component {
             </div>
             <div id='navbar' className='navbar-collapse collapse'>
               <ul className='nav navbar-nav'>
-                <li><NavLink to='/current-lawsuits' activeClassName='active'>Главная</NavLink></li>
+                <li><NavLink to='/open-lawsuits' activeClassName='active'>Главная</NavLink></li>
                 <li><NavLink to='/lawsuits' activeClassName='active'>Судебные дела</NavLink></li>
                 <li><NavLink to='/documents' activeClassName='active'>Список документов</NavLink></li>
                 <li><NavLink to='/participants/schedule' activeClassName='active'>Личная страница</NavLink></li>

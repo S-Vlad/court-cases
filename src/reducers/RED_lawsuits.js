@@ -1,4 +1,4 @@
-import { /*GET_LAWSUITS_REQUEST,*/ GET_LAWSUITS_SUCCESS } from '../constants/CON_lawsuits.js';
+import { /*GET_LAWSUITS_REQUEST,*/ GET_LAWSUITS_SUCCESS, FIND_LAWSUITS } from '../constants/CON_lawsuits.js';
 
 
 const initialState = {
@@ -12,6 +12,9 @@ export default function lawsuits(state = initialState, action) {
 
     case GET_LAWSUITS_SUCCESS:
       return {...state, data: action.payload/*, fetching: false*/};
+
+    case FIND_LAWSUITS:
+      return {...state, data: action.payload};
 
     default:
       return state;
