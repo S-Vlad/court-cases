@@ -19,40 +19,44 @@ export default class AllLawsuitsPage extends Component {
 
   render() {
     const props = this.props;
-    let template = [];
+    let template = [],
+        notFoundMessage;
 
     if (props.lawsuits.data) {
       const data = props.lawsuits.data;
 
-      template = data.map((itemTempl, index) => {
+      template = data.map((item, index) => {
 
         let claimant,
             respondent,
-            judge,
-            participants = itemTempl.participants_id;
+            judge;
 
-        participants.forEach((item) => {
-          if (item.type === 'Истец') {
-            claimant = item;
-          } else if (item.type === 'Ответчик') {
-            respondent = item;
+        item.participants_id.forEach((itemParticipants) => {
+          if (itemParticipants.type === 'Истец') {
+            claimant = itemParticipants;
+          } else if (itemParticipants.type === 'Ответчик') {
+            respondent = itemParticipants;
           } else {
-            judge = item;
+            judge = itemParticipants;
           }
         });
 
         return(
           <tr key={index}>
-            <td><Link to={`/current-lawsuit/${itemTempl.objectId}`}>{itemTempl.state}</Link></td>
-            <td>{claimant.name}</td>
-            <td>{respondent.name}</td>
-            <td>{judge.name}</td>
-            <td>{itemTempl.type}</td>
-            <td>{itemTempl.schedule_id[0].date_}</td>
-            <td>{itemTempl.documents_id[0].name}</td>
+            <td><Link to={`/current-lawsuit/${item.objectId}`}>{item.state}</Link></td>
+            <td>{claimant.name ? claimant.name : ''}</td>
+            <td>{respondent.name ? respondent.name : ''}</td>
+            <td>{judge.name ? judge.name : ''}</td>
+            <td>{item.type}</td>
+            <td>{item.schedule_id[0] ? item.schedule_id[0].date_ : ''}</td>
+            <td>{item.documents_id[0] ? item.documents_id[0].name : ''}</td>
           </tr>
         );
       });
+
+      if (template.length === 0) {
+        notFoundMessage = (<p>Поиск не дал результата</p>);
+      }
     }
 
     return(
@@ -73,7 +77,7 @@ export default class AllLawsuitsPage extends Component {
             Поиск
           </button>
         </form>
-        <table className='table table-bordered'>
+        <table className='table table-bordered lawsuit'>
           <thead>
             <tr>
               <th>Статус</th>
@@ -89,6 +93,7 @@ export default class AllLawsuitsPage extends Component {
             {template}
           </tbody>
         </table>
+        {notFoundMessage}
       </div>
     );
   }

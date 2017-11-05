@@ -33,27 +33,49 @@ header {
   margin-bottom: 80px;
 }
 
-.table td:nth-child(7) {
-  width: 55%;
-}
-
 .document-edit {
   margin-bottom: 10px;
   height: 90px;
 }
 
-.documents {
-  margin-bottom: 10px;
-}
-
-/*.btn-info {
-  margin-top: 20px;
-}*/
-
+.add-documents,
 .form-inline {
   margin-bottom: 10px;
 }
 
 .form-inline input {
   margin-right: 5px;
+}
+
+.form-control {
+  display: inline-block;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+tbody > tr > td span:hover{
+  transition: .5s ease-out all;
+  color: red;
+  cursor: pointer;
+}
+
+.lawsuit th:nth-child(1) {
+  width: 9%;
+}
+
+.lawsuit th:nth-child(2),
+.lawsuit th:nth-child(3),
+.lawsuit th:nth-child(4),
+.lawsuit th:nth-child(5) {
+  width: 11%;
+}
+
+.lawsuit th:nth-child(6) {
+  width: 8%;
+}
+
+.lawsuit th:nth-child(7) {
+  width: 39%;
 }

@@ -14,32 +14,32 @@ export default class CurrentLawsuitPage extends Component {
 
     if (data && data.length > 0) {
 
-      template = data.map((itemTempl, index) => {
+      template = data.map((item, index) => {
 
         let claimant,
             respondent,
             judge,
-            participants = itemTempl.participants_id;
+            participants = item.participants_id;
 
-        participants.forEach((item) => {
-          if (item.type === 'Истец') {
-            claimant = item;
-          } else if (item.type === 'Ответчик') {
-            respondent = item;
+        participants.forEach((itemParticipants) => {
+          if (itemParticipants.type === 'Истец') {
+            claimant = itemParticipants;
+          } else if (itemParticipants.type === 'Ответчик') {
+            respondent = itemParticipants;
           } else {
-            judge = item;
+            judge = itemParticipants;
           }
         });
 
         return(
           <tr key={index}>
-            <td>{itemTempl.state}</td>
-            <td>{claimant.name}</td>
-            <td>{respondent.name}</td>
-            <td>{itemTempl.type}</td>
-            <td>{itemTempl.schedule_id[0].date_}</td>
-            <td>{judge.name}</td>
-            <td>{itemTempl.documents_id[0].name}</td>
+            <td>{item.state}</td>
+            <td>{claimant.name ? claimant.name : ''}</td>
+            <td>{respondent.name ? respondent.name : ''}</td>
+            <td>{judge.name ? judge.name : ''}</td>
+            <td>{item.type}</td>
+            <td>{item.schedule_id[0] ? item.schedule_id[0].date_ : ''}</td>
+            <td>{item.documents_id[0] ? item.documents_id[0].name : ''}</td>
           </tr>
         );
       });
@@ -50,8 +50,8 @@ export default class CurrentLawsuitPage extends Component {
     if (data && data.length > 0) {
       return(
         <div>
-          <h3>Текущие судебные дела</h3>
-          <table className='table table-bordered'>
+          <h3>Судебное дело</h3>
+          <table className='table table-bordered lawsuit'>
             <thead>
               <tr>
                 <th>Статус</th>

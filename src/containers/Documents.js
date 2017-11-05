@@ -8,7 +8,7 @@ import CurrentDocumentPage from '../components/COM_currentDocumentPage.js';
 
 class Documents extends Component {
   render() {
-    const { getDocuments, editDocument, editCancel, editDocumentCancel, saveDocument, addDocument} = this.props.documentActions,
+    const { getDocuments, editDocument, editCancel, editDocumentCancel, saveDocument, addDocument, deleteDocument } = this.props.documentActions,
           { documents } = this.props;
 
     let template,
@@ -21,7 +21,7 @@ class Documents extends Component {
       ChildElement = CurrentDocumentPage;
     }
 
-    template = (<ChildElement documents={documents} getDocuments={getDocuments} editDocument={editDocument} editCancel={editCancel} editDocumentCancel={editDocumentCancel} saveDocument={saveDocument} location={this.props.match} addDocument={addDocument} />);
+    template = (<ChildElement documents={documents} getDocuments={getDocuments} editDocument={editDocument} editCancel={editCancel} editDocumentCancel={editDocumentCancel} saveDocument={saveDocument} location={this.props.match} addDocument={addDocument} deleteDocument={deleteDocument} />);
 
     return(
       <main>

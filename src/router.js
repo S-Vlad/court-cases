@@ -4,6 +4,7 @@ import NotFoundPage from './components/COM_notFoundPage.js';
 import Header from './components/COM_header.js';
 import Lawsuits from './containers/Lawsuits.js';
 import Documents from './containers/Documents.js';
+import Participants from './containers/Participants.js';
 
 
 export default (
@@ -17,6 +18,7 @@ export default (
         <Route exact path='/documents' component={Documents} />
         <Route exact path='/documents/edit/:document' component={Documents} />
         <Route exact path='/documents/:document' component={Documents} />
+        <Route path='/participants' component={Participants} />
         <Redirect exact from='/' to='/open-lawsuits' /> {/*перенаправление на нужную страницу*/}
         <Route path='*' component={NotFoundPage}/>
       </Switch>

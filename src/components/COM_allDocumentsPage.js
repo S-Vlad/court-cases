@@ -6,7 +6,7 @@ export default class AllDocumentsPage extends Component {
   constructor() {
     super();
 
-    this.addButtonHandler = this.addButtonHandler.bind(this)
+    this.addButtonHandler = this.addButtonHandler.bind(this);
   }
 
   componentDidMount() {
@@ -14,7 +14,18 @@ export default class AllDocumentsPage extends Component {
   }
 
   addButtonHandler() {
-    this.props.addDocument(this.refs);
+    let textElement = this.refs.addDocumentInput;
+
+    if (textElement.value) {
+      this.props.addDocument(this.refs);
+      textElement.value = '';
+    } else {
+      alert('Введите название документа');
+    }
+  }
+
+  deleteButtonHandler(objectId) {
+    this.props.deleteDocument(objectId);
   }
 
   render() {
@@ -29,6 +40,12 @@ export default class AllDocumentsPage extends Component {
           <tr key={index}>
             <td><Link to={`/documents/${item.objectId}`}>{item.name}</Link></td>
             <td>{item.type}</td>
+            <td className='text-center'>
+              <span
+                onClick={this.deleteButtonHandler.bind(this, item.objectId)}
+                className='glyphicon glyphicon-remove'>
+              </span>
+            </td>
           </tr>
         );
       });
@@ -40,14 +57,15 @@ export default class AllDocumentsPage extends Component {
          <button
             onClick={this.addButtonHandler}
             type='button'
-            className='btn btn-default documents'>
+            className='btn btn-default add-documents'>
             Добавить новость
           </button>
-        <table className='table table-bordered'>
+        <table className='table table-bordered documents'>
           <thead>
             <tr>
               <th>Название</th>
               <th>Тип</th>
+              <th>Удалить</th>
             </tr>
           </thead>
           <tbody>
@@ -61,6 +79,7 @@ export default class AllDocumentsPage extends Component {
                   <option>Постановление</option>
                 </select>
               </td>
+              <td></td>
             </tr>
             {template}
           </tbody>

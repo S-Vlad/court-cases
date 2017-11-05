@@ -14,10 +14,6 @@ export default class CurrentDocumentsPage extends Component {
     this.props.getDocuments(this.props.location.params.document);
   }
 
-  // componentWillUnmount() {
-  //   this.props.editDocumentCancel();
-  // }
-
   editButtonHandler() {
     this.props.editDocument();
   }
