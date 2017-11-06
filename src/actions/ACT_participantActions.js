@@ -81,7 +81,7 @@ export function editParticipant(participantId) {
 export function editParticipantCancel() {
   return (dispatch) => {
     dispatch({
-      type: EDIT_PARTICIPANT_CANCEL,
+      type: EDIT_PARTICIPANT_CANCEL
     });
   }
 }

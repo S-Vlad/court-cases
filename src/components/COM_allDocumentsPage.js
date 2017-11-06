@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 
 export default class AllDocumentsPage extends Component {
@@ -14,42 +13,96 @@ export default class AllDocumentsPage extends Component {
   }
 
   addButtonHandler() {
-    let textElement = this.refs.addDocumentInput;
+    let nameField = this.refs.addDocumentInput;
 
-    if (textElement.value) {
+    if (nameField.value) {
       this.props.addDocument(this.refs);
-      textElement.value = '';
+      nameField.value = '';
     } else {
       alert('Введите название документа');
     }
   }
 
-  deleteButtonHandler(objectId) {
-    this.props.deleteDocument(objectId);
+  editClickHandler(documentId) {
+    this.props.editDocument(documentId);
+  }
+
+  saveButtonHandler(documentId) {
+    this.props.documents.data.forEach((item) => {
+
+      if (item.objectId === documentId) {
+        if (item.name !== this.refs.documentName.value ||
+            item.type !== this.refs.documentType.value) {
+          this.props.saveDocument(documentId, this.refs);
+
+        } else {
+          this.props.editDocumentCancel();
+        }
+      }
+    });
+  }
+
+  deleteButtonHandler(documentId) {
+    this.props.deleteDocument(documentId);
   }
 
   render() {
-    const props = this.props;
+    const props = this.props,
+          data = props.documents.data;
+
     let template = [];
 
-    if (props.documents.data) {
-      const data = props.documents.data;
+    if (data) {
 
       template = data.map((item, index) => {
-        return(
-          <tr key={index}>
-            <td><Link to={`/documents/${item.objectId}`}>{item.name}</Link></td>
-            <td>{item.type}</td>
-            <td className='text-center'>
-              <button
+
+        if (this.props.documents.edit === item.objectId) {
+          return(
+            <tr key={index}>
+              <td>
+                <textarea
+                  className='form-control'
+                  ref='documentName'
+                  defaultValue={item.name}
+                  rows='1'>
+                </textarea>
+              </td>
+              <td>
+                <select ref='documentType' className='form-control'>
+                  <option>Закон</option>
+                  <option>Постановление</option>
+                </select>
+              </td>
+              <td className='text-center'>
+                <button
+                  onClick={this.saveButtonHandler.bind(this, item.objectId)}
+                  type='button'
+                  className='btn btn-success'>
+                  Сохранить
+                </button>
+              </td>
+            </tr>
+          );
+        } else {
+          return(
+            <tr key={index}>
+              <td onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+                {item.name}
+              </td>
+              <td onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+                {item.type}
+              </td>
+              <td className='text-center'>
+                <button
                   onClick={this.deleteButtonHandler.bind(this, item.objectId)}
                   type='button'
-                  className='btn btn-danger add-documents'>
+                  className='btn btn-danger'>
                   Удалить
                 </button>
-            </td>
-          </tr>
-        );
+              </td>
+            </tr>
+          );
+        }
       });
     }
 
@@ -69,10 +122,9 @@ export default class AllDocumentsPage extends Component {
               <td>
                 <textarea
                   ref='addDocumentInput'
-                  placeholder='Введите текст нового документа'
+                  placeholder='Текст нового документа'
                   className='form-control'
-                  rows='1'
-                  type='text'>
+                  rows='1'>
                 </textarea>
               </td>
               <td>
@@ -81,7 +133,7 @@ export default class AllDocumentsPage extends Component {
                   <option>Постановление</option>
                 </select>
               </td>
-              <td>
+              <td className='text-center'>
                 <button
                   onClick={this.addButtonHandler}
                   type='button'
@@ -93,6 +145,7 @@ export default class AllDocumentsPage extends Component {
             {template}
           </tbody>
         </table>
+        <p className='alert alert-info' role='alert'>Для редактирования дважды кликните на ячейку.</p>
       </div>
     );
   }

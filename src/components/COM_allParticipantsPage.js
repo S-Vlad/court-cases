@@ -18,6 +18,7 @@ export default class AllParticipantsPage extends Component {
 
     if (nameField.value && typeField.value) {
       this.props.addParticipant(participantId, this.refs);
+
       nameField.value = '';
       addressField.value = '';
       phoneField.value = '';
@@ -28,18 +29,20 @@ export default class AllParticipantsPage extends Component {
     }
   }
 
-  editHandler(participantId) {
+  editClickHandler(participantId) {
     this.props.editParticipant(participantId);
   }
 
-  saveHandler(participantId) {
+  saveButtonHandler(participantId) {
     this.props.participants.data.forEach((item) => {
+
       if (item.objectId === participantId) {
         if (item.name !== this.refs.participantName.value ||
             item.address !== this.refs.participantAddress.value ||
             item.phone !== this.refs.participantPhone.value ||
             item.type !== this.refs.participantType.value) {
           this.props.saveParticipant(participantId, this.refs);
+
         } else {
           this.props.editParticipantCancel();
         }
@@ -53,13 +56,11 @@ export default class AllParticipantsPage extends Component {
 
     let template = [];
 
-    if (data && data.length > 0) {
-
-      let edit = this.props.participants.edit;
+    if (data) {
 
         template = data.map((item, index) => {
 
-        if (edit === item.objectId) {
+        if (this.props.participants.edit === item.objectId) {
           return(
             <tr key={index}>
               <td>
@@ -92,9 +93,9 @@ export default class AllParticipantsPage extends Component {
               </td>
               <td className='text-center'>
                 <button
-                  onClick={this.saveHandler.bind(this, item.objectId)}
+                  onClick={this.saveButtonHandler.bind(this, item.objectId)}
                   type='button'
-                  className='btn btn-success add-documents'>
+                  className='btn btn-success'>
                   Сохранить
                 </button>
               </td>
@@ -104,26 +105,26 @@ export default class AllParticipantsPage extends Component {
           return(
            <tr key={index}>
               <td
-                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
                 {item.name}
               </td>
               <td
-                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
                 {item.address}
               </td>
               <td
-                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
                 {item.phone}
               </td>
               <td
-                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
                 {item.type}
               </td>
               <td className='text-center'>
                 <button
                   onClick={this.deleteButtonHandler.bind(this, item.objectId)}
                   type='button'
-                  className='btn btn-danger add-documents'>
+                  className='btn btn-danger'>
                   Удалить
                 </button>
               </td>
@@ -152,24 +153,28 @@ export default class AllParticipantsPage extends Component {
                 <td>
                   <input
                     ref='addParticipantName'
-                    className='form-control' />
+                    className='form-control'
+                    placeholder='Имя' />
                 </td>
                 <td>
                   <input
                     ref='addParticipantAddress'
-                    className='form-control' />
+                    className='form-control'
+                    placeholder='Адресс' />
                 </td>
                 <td>
                   <input
                     ref='addParticipantPhone'
-                    className='form-control' />
+                    className='form-control'
+                    placeholder='Телефон' />
                 </td>
                 <td>
                   <input
                     ref='addParticipantType'
-                    className='form-control' />
+                    className='form-control'
+                    placeholder='Сторона' />
                 </td>
-                <td>
+                <td className='text-center'>
                   <button
                     onClick={this.addButtonHandler.bind(this, this.props.participants.objectId)}
                     type='button'
@@ -181,6 +186,7 @@ export default class AllParticipantsPage extends Component {
               {template}
             </tbody>
           </table>
+          <p className='alert alert-info' role='alert'>Для редактирования дважды кликните на ячейку.</p>
         </div>
       );
   }

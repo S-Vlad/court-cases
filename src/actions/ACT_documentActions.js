@@ -37,10 +37,11 @@ export function getDocuments(documentId) {
   }
 }
 
-export function editDocument() {
+export function editDocument(documentId) {
   return (dispatch) => {
     dispatch({
-      type: EDIT_DOCUMENT
+      type: EDIT_DOCUMENT,
+      payload: documentId
     });
   }
 }
@@ -58,15 +59,17 @@ export function saveDocument(documentId, refDocumentInput) {
     Backendless.Data
       .of('Documents')
       .save({
-        name: refDocumentInput.saveDocumentInput.value,
-        objectId: documentId,
-        type: refDocumentInput.saveDocumentSelect.value
+        name: refDocumentInput.documentName.value,
+        type: refDocumentInput.documentType.value,
+        objectId: documentId
       })
-      .then((data) => {
-        dispatch({
-          type: SAVE_DOCUMENT,
-          payload: [data]
-        })
+      .then(() => {
+
+        let queryBuilder = Backendless.DataQueryBuilder.create();
+
+        queryBuilder.setSortBy(['created DESC']);
+
+        getDocumentsFunc(queryBuilder, dispatch, SAVE_DOCUMENT)
       })
   }
 }

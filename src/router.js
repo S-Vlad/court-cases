@@ -15,9 +15,7 @@ export default (
         <Route path='/open-lawsuits' component={Lawsuits} />
         <Route path='/lawsuits' component={Lawsuits} />
         <Route path='/current-lawsuit/:lawsuit' component={Lawsuits}/>
-        <Route exact path='/documents' component={Documents} />
-        <Route exact path='/documents/edit/:document' component={Documents} />
-        <Route exact path='/documents/:document' component={Documents} />
+        <Route path='/documents' component={Documents} />
         <Route path='/participants' component={Participants} />
         <Redirect exact from='/' to='/open-lawsuits' /> {/*перенаправление на нужную страницу*/}
         <Route path='*' component={NotFoundPage}/>

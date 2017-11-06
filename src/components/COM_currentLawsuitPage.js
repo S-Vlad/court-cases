@@ -67,7 +67,6 @@ export default class CurrentLawsuitPage extends Component {
               {template}
             </tbody>
           </table>
-          <button type='button' className='btn btn-info'>Редактировать</button>
         </div>
       );
     } else {

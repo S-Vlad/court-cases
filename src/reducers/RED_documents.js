@@ -2,7 +2,6 @@ import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUME
 
 
 const initialState = {
-  data: [],
   edit: false
 };
 
@@ -12,13 +11,13 @@ export default function documents(state = initialState, action) {
       return {...state, data: action.payload, edit: false};
 
     case EDIT_DOCUMENT:
-      return {...state, edit: true};
+      return {...state, edit: action.payload};
 
     case EDIT_DOCUMENT_CANCEL:
       return {...state, edit: false};
 
     case SAVE_DOCUMENT:
-      return {...state, edit: false, data: action.payload};
+      return {...state, data: action.payload, edit: false};
 
     case ADD_DOCUMENT:
       return {...state, data: action.payload};
