@@ -38,17 +38,13 @@ header {
   height: 90px;
 }
 
-.add-documents,
 .form-inline {
   margin-bottom: 10px;
 }
 
 .form-inline input {
   margin-right: 5px;
-}
-
-.form-control {
-  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .table > tbody > tr > td {
@@ -78,4 +74,10 @@ tbody > tr > td span:hover{
 
 .lawsuit th:nth-child(7) {
   width: 39%;
+}
+
+@media (min-width: 768px) {
+  .form-inline input {
+    margin-bottom: 0;
+  }
 }

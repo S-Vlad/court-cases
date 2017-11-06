@@ -8,10 +8,10 @@ import AllParticipantsPage from '../components/COM_allParticipantsPage.js';
 class Participants extends Component {
   render() {
     const { participants } = this.props,
-          { getParticipants, deleteParticipant, editParticipant, saveParticipants } = this.props.participantActions;
+          { getParticipants, deleteParticipant, addParticipant, editParticipant, editParticipantCancel, saveParticipant } = this.props.participantActions;
 
     return (
-      <AllParticipantsPage participants={participants} getParticipants={getParticipants} deleteParticipant={deleteParticipant} editParticipant={editParticipant} saveParticipants={saveParticipants} />
+      <AllParticipantsPage participants={participants} getParticipants={getParticipants} deleteParticipant={deleteParticipant} addParticipant={addParticipant} editParticipant={editParticipant} editParticipantCancel={editParticipantCancel} saveParticipant={saveParticipant} />
     );
   }
 }

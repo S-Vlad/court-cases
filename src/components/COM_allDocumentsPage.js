@@ -41,10 +41,12 @@ export default class AllDocumentsPage extends Component {
             <td><Link to={`/documents/${item.objectId}`}>{item.name}</Link></td>
             <td>{item.type}</td>
             <td className='text-center'>
-              <span
-                onClick={this.deleteButtonHandler.bind(this, item.objectId)}
-                className='glyphicon glyphicon-remove'>
-              </span>
+              <button
+                  onClick={this.deleteButtonHandler.bind(this, item.objectId)}
+                  type='button'
+                  className='btn btn-danger add-documents'>
+                  Удалить
+                </button>
             </td>
           </tr>
         );
@@ -54,24 +56,24 @@ export default class AllDocumentsPage extends Component {
     return(
       <div>
         <h3>Документы</h3>
-         <button
-            onClick={this.addButtonHandler}
-            type='button'
-            className='btn btn-default add-documents'>
-            Добавить новость
-          </button>
         <table className='table table-bordered documents'>
           <thead>
             <tr>
               <th>Название</th>
               <th>Тип</th>
-              <th>Удалить</th>
+              <th>Действия</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <textarea ref='addDocumentInput' className='form-control' rows='1' type='text'></textarea>
+                <textarea
+                  ref='addDocumentInput'
+                  placeholder='Введите текст нового документа'
+                  className='form-control'
+                  rows='1'
+                  type='text'>
+                </textarea>
               </td>
               <td>
                 <select ref='addDocumentSelect' className='form-control'>
@@ -79,7 +81,14 @@ export default class AllDocumentsPage extends Component {
                   <option>Постановление</option>
                 </select>
               </td>
-              <td></td>
+              <td>
+                <button
+                  onClick={this.addButtonHandler}
+                  type='button'
+                  className='btn btn-info'>
+                  Добавить
+                </button>
+              </td>
             </tr>
             {template}
           </tbody>

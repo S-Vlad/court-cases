@@ -6,18 +6,45 @@ export default class AllParticipantsPage extends Component {
     this.props.getParticipants();
   }
 
-  editHandler(objectId, ref) {
-    this.props.editParticipant(objectId);
-    console.log(objectId);
-    console.log(ref);
+  deleteButtonHandler(participantId) {
+    this.props.deleteParticipant(participantId);
   }
 
-  saveHandler() {
-    this.props.saveParticipants();
+  addButtonHandler(participantId) {
+    let nameField = this.refs.addParticipantName,
+        addressField = this.refs.addParticipantAddress,
+        phoneField = this.refs.addParticipantPhone,
+        typeField = this.refs.addParticipantType;
+
+    if (nameField.value && typeField.value) {
+      this.props.addParticipant(participantId, this.refs);
+      nameField.value = '';
+      addressField.value = '';
+      phoneField.value = '';
+      typeField.value = '';
+
+    } else {
+      alert('Введите имя и занимаемую сторону');
+    }
   }
 
-  deleteButtonHandler(objectId) {
-    this.props.deleteParticipant(objectId);
+  editHandler(participantId) {
+    this.props.editParticipant(participantId);
+  }
+
+  saveHandler(participantId) {
+    this.props.participants.data.forEach((item) => {
+      if (item.objectId === participantId) {
+        if (item.name !== this.refs.participantName.value ||
+            item.address !== this.refs.participantAddress.value ||
+            item.phone !== this.refs.participantPhone.value ||
+            item.type !== this.refs.participantType.value) {
+          this.props.saveParticipant(participantId, this.refs);
+        } else {
+          this.props.editParticipantCancel();
+        }
+      }
+    });
   }
 
   render() {
@@ -33,80 +60,76 @@ export default class AllParticipantsPage extends Component {
         template = data.map((item, index) => {
 
         if (edit === item.objectId) {
-        return(
-          <tr key={index}>
-            <td>
-              <input
-                onBlur={this.saveHandler.bind(this)}
-                className='form-control'
-                ref='participantName'
-                defaultValue={item.name}
-              />
-            </td>
-            <td>
-              <input
-                onBlur={this.saveHandler.bind(this)}
-                className='form-control'
-                ref='participantAddress'
-                defaultValue={item.address}
-              />
-            </td>
-            <td>
-              <input
-                onBlur={this.saveHandler.bind(this)}
-                className='form-control'
-                ref='participantPhone'
-                defaultValue={item.phone}
-              />
-            </td>
-            <td>
-              <input
-                onBlur={this.saveHandler.bind(this)}
-                className='form-control'
-                ref='participantType'
-                defaultValue={item.type}
-              />
-            </td>
-            <td className='text-center'>
-              <span
-                onClick={this.deleteButtonHandler.bind(this, item.objectId)}
-                className='glyphicon glyphicon-remove'>
-              </span>
-            </td>
-          </tr>
-        );
-      } else {
-        return(
-         <tr key={index}>
-            <td
-              onDoubleClick={this.editHandler.bind(this, item.objectId, 'participantName')}
-              >
-              {item.name}
-            </td>
-            <td
-              onDoubleClick={this.editHandler.bind(this, item.objectId, 'participantAddress')}
-              >
-              {item.address}
-            </td>
-            <td
-              onDoubleClick={this.editHandler.bind(this, item.objectId, 'participantPhone')}
-              >
-              {item.phone}
-            </td>
-            <td
-              onDoubleClick={this.editHandler.bind(this, item.objectId, 'participantType')}
-              >
-              {item.type}
-            </td>
-            <td className='text-center'>
-              <span
-                onClick={this.deleteButtonHandler.bind(this, item.objectId)}
-                className='glyphicon glyphicon-remove'>
-              </span>
-            </td>
-          </tr>
-        );
-      }
+          return(
+            <tr key={index}>
+              <td>
+                <input
+                  className='form-control'
+                  ref='participantName'
+                  defaultValue={item.name}
+                />
+              </td>
+              <td>
+                <input
+                  className='form-control'
+                  ref='participantAddress'
+                  defaultValue={item.address}
+                />
+              </td>
+              <td>
+                <input
+                  className='form-control'
+                  ref='participantPhone'
+                  defaultValue={item.phone}
+                />
+              </td>
+              <td>
+                <input
+                  className='form-control'
+                  ref='participantType'
+                  defaultValue={item.type}
+                />
+              </td>
+              <td className='text-center'>
+                <button
+                  onClick={this.saveHandler.bind(this, item.objectId)}
+                  type='button'
+                  className='btn btn-success add-documents'>
+                  Сохранить
+                </button>
+              </td>
+            </tr>
+          );
+        } else {
+          return(
+           <tr key={index}>
+              <td
+                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                {item.name}
+              </td>
+              <td
+                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                {item.address}
+              </td>
+              <td
+                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                {item.phone}
+              </td>
+              <td
+                onDoubleClick={this.editHandler.bind(this, item.objectId)}>
+                {item.type}
+              </td>
+              <td className='text-center'>
+                <button
+                  onClick={this.deleteButtonHandler.bind(this, item.objectId)}
+                  type='button'
+                  className='btn btn-danger add-documents'>
+                  Удалить
+                </button>
+              </td>
+            </tr>
+          );
+        }
 
       });
     }
@@ -121,10 +144,40 @@ export default class AllParticipantsPage extends Component {
                 <th>Адрес</th>
                 <th>Телефон</th>
                 <th>Сторона</th>
-                <th>Удалить</th>
+                <th>Действия</th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>
+                  <input
+                    ref='addParticipantName'
+                    className='form-control' />
+                </td>
+                <td>
+                  <input
+                    ref='addParticipantAddress'
+                    className='form-control' />
+                </td>
+                <td>
+                  <input
+                    ref='addParticipantPhone'
+                    className='form-control' />
+                </td>
+                <td>
+                  <input
+                    ref='addParticipantType'
+                    className='form-control' />
+                </td>
+                <td>
+                  <button
+                    onClick={this.addButtonHandler.bind(this, this.props.participants.objectId)}
+                    type='button'
+                    className='btn btn-info'>
+                    Добавить
+                  </button>
+                </td>
+              </tr>
               {template}
             </tbody>
           </table>
@@ -132,5 +185,3 @@ export default class AllParticipantsPage extends Component {
       );
   }
 }
-
-// <td>{(edit ? <input defaultValue={item.name} /> : <span>{item.name}</span>) }</td>

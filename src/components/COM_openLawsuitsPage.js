@@ -34,9 +34,9 @@ export default class CurrentLawsuitsPage extends Component {
         return(
           <tr key={index}>
             <td><Link to={`/current-lawsuit/${item.objectId}`}>{item.state}</Link></td>
-            <td>{claimant.name ? claimant.name : ''}</td>
-            <td>{respondent.name ? respondent.name : ''}</td>
-            <td>{judge.name ? judge.name : ''}</td>
+            <td>{claimant ? claimant.name : ''}</td>
+            <td>{respondent ? respondent.name : ''}</td>
+            <td>{judge ? judge.name : ''}</td>
             <td>{item.type}</td>
             <td>{item.schedule_id[0] ? item.schedule_id[0].date_ : ''}</td>
             <td>{item.documents_id[0] ? item.documents_id[0].name : ''}</td>

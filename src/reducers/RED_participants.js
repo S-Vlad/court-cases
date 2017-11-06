@@ -1,4 +1,4 @@
-import { GET_PARTICIPANTS, DELETE_PARTICIPANT, EDIT_PARTICIPANT, SAVE_PARTICIPANT } from '../constants/CON_participants.js';
+import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT, EDIT_PARTICIPANT_CANCEL, SAVE_PARTICIPANT } from '../constants/CON_participants.js';
 
 
 const initialState = {
@@ -13,11 +13,17 @@ export default function participants(state = initialState, action) {
     case DELETE_PARTICIPANT:
       return {...state, data: action.payload};
 
+    case ADD_PARTICIPANT:
+      return {...state, data: action.payload};
+
     case EDIT_PARTICIPANT:
       return {...state, edit: action.payload};
 
+    case EDIT_PARTICIPANT_CANCEL:
+      return {...state, edit: false};
+
     case SAVE_PARTICIPANT:
-      return {...state/*, data: action.payload*/, edit: false};
+      return {...state, data: action.payload, edit: false};
 
     default:
       return state;

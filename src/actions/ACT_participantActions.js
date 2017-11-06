@@ -1,5 +1,5 @@
 import Backendless from '../backendless.js';
-import { GET_PARTICIPANTS, DELETE_PARTICIPANT, EDIT_PARTICIPANT, SAVE_PARTICIPANT } from '../constants/CON_participants.js';
+import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT, EDIT_PARTICIPANT_CANCEL , SAVE_PARTICIPANT } from '../constants/CON_participants.js';
 
 
 function getParticipantsFunc(queryBuilder, dispatch, type) {
@@ -32,40 +32,11 @@ export function getParticipants() {
   }
 }
 
-export function editParticipant(objectId) {
-  return (dispatch) => {
-    dispatch({
-      type: EDIT_PARTICIPANT,
-      payload: objectId
-    });
-  }
-}
-
-export function saveParticipants(documentId, refParticipantInput) {
-  return (dispatch) => {
-
-    // Backendless.Data
-    //   .of('Participants')
-    //   .save({
-    //     name: refParticipantInput,
-    //     telephone: refParticipantInput,
-    //     address: refParticipantInput,
-    //     type: refParticipantInput,
-    //     objectId: documentId
-    //   })
-    //   .then(() => {
-        dispatch({
-          type: SAVE_PARTICIPANT
-        })
-      // })
-  }
-}
-
-export function deleteParticipant(objectId) {
+export function deleteParticipant(participantId) {
   return (dispatch) => {
     Backendless.Data
       .of('Participants')
-      .remove({objectId: objectId})
+      .remove({objectId: participantId})
       .then(() => {
         let queryBuilder = Backendless.DataQueryBuilder.create();
 
@@ -73,5 +44,66 @@ export function deleteParticipant(objectId) {
 
         getParticipantsFunc(queryBuilder, dispatch, DELETE_PARTICIPANT);
       });
+  }
+}
+
+export function addParticipant(participantId, refParticipantInput) {
+  return (dispatch) => {
+    Backendless.Data
+      .of('Participants')
+      .save({
+        name: refParticipantInput.addParticipantName.value,
+        address: refParticipantInput.addParticipantAddress.value,
+        phone: refParticipantInput.addParticipantPhone.value,
+        type: refParticipantInput.addParticipantType.value,
+        objectId: participantId
+      })
+      .then(() => {
+        let queryBuilder = Backendless.DataQueryBuilder.create();
+
+        queryBuilder.setSortBy(['created DESC']);
+
+        getParticipantsFunc(queryBuilder, dispatch, ADD_PARTICIPANT);
+
+      });
+  }
+}
+
+export function editParticipant(participantId) {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_PARTICIPANT,
+      payload: participantId
+    });
+  }
+}
+
+export function editParticipantCancel() {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_PARTICIPANT_CANCEL,
+    });
+  }
+}
+
+export function saveParticipant(participantId, refParticipantInput) {
+  return (dispatch) => {
+
+    Backendless.Data
+      .of('Participants')
+      .save({
+        name: refParticipantInput.participantName.value,
+        address: refParticipantInput.participantAddress.value,
+        phone: refParticipantInput.participantPhone.value,
+        type: refParticipantInput.participantType.value,
+        objectId: participantId
+      })
+      .then(() => {
+        let queryBuilder = Backendless.DataQueryBuilder.create();
+
+        queryBuilder.setSortBy(['created DESC']);
+
+        getParticipantsFunc(queryBuilder, dispatch, SAVE_PARTICIPANT);
+      })
   }
 }
