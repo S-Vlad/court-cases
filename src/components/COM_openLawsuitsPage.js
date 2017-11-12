@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 
 export default class CurrentLawsuitsPage extends Component {
+  static propTypes = {
+    getLawsuits: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.getLawsuits(false);
   }
@@ -69,7 +73,3 @@ export default class CurrentLawsuitsPage extends Component {
     );
   }
 }
-
-CurrentLawsuitsPage.propTypes = {
-  getLawsuits: PropTypes.func.isRequired,
-};

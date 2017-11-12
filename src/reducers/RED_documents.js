@@ -2,6 +2,7 @@ import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUME
 
 
 const initialState = {
+  data: [],
   edit: false,
 };
 

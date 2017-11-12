@@ -14,6 +14,18 @@ const mapDispatchToProps = dispatch => ({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Documents extends Component {
+  static propTypes = {
+    documents: PropTypes.object.isRequired,
+    documentActions: PropTypes.shape({
+      addDocument: PropTypes.func.isRequired,
+      deleteDocument: PropTypes.func.isRequired,
+      editDocument: PropTypes.func.isRequired,
+      editDocumentCancel: PropTypes.func.isRequired,
+      getDocuments: PropTypes.func.isRequired,
+      saveDocument: PropTypes.func.isRequired,
+    }).isRequired,
+  };
+
   render() {
     const {
             getDocuments, editDocument, editDocumentCancel,
@@ -40,15 +52,3 @@ export default class Documents extends Component {
     );
   }
 }
-
-Documents.propTypes = {
-  documents: PropTypes.object.isRequired,
-  documentActions: PropTypes.shape({
-    addDocument: PropTypes.func.isRequired,
-    deleteDocument: PropTypes.func.isRequired,
-    editDocument: PropTypes.func.isRequired,
-    editDocumentCancel: PropTypes.func.isRequired,
-    getDocuments: PropTypes.func.isRequired,
-    saveDocument: PropTypes.func.isRequired,
-  }).isRequired,
-};

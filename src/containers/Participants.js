@@ -15,6 +15,18 @@ const mapDispatchToProps = dispatch => ({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Participants extends Component {
+  static propTypes = {
+    participants: PropTypes.object.isRequired,
+    participantActions: PropTypes.shape({
+      addParticipant: PropTypes.func.isRequired,
+      deleteParticipant: PropTypes.func.isRequired,
+      editParticipant: PropTypes.func.isRequired,
+      editParticipantCancel: PropTypes.func.isRequired,
+      getParticipants: PropTypes.func.isRequired,
+      saveParticipant: PropTypes.func.isRequired,
+    }).isRequired,
+  };
+
   render() {
     const { participants } = this.props,
           {
@@ -35,15 +47,3 @@ export default class Participants extends Component {
     );
   }
 }
-
-Participants.propTypes = {
-  participants: PropTypes.object.isRequired,
-  participantActions: PropTypes.shape({
-    addParticipant: PropTypes.func.isRequired,
-    deleteParticipant: PropTypes.func.isRequired,
-    editParticipant: PropTypes.func.isRequired,
-    editParticipantCancel: PropTypes.func.isRequired,
-    getParticipants: PropTypes.func.isRequired,
-    saveParticipant: PropTypes.func.isRequired,
-  }).isRequired,
-};

@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 
 
 export default class AllDocumentsPage extends Component {
+  static propTypes = {
+    documents: PropTypes.shape({
+      data: PropTypes.array.isRequired,
+      edit: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+      ]).isRequired,
+    }).isRequired,
+    addDocument: PropTypes.func.isRequired,
+    deleteDocument: PropTypes.func.isRequired,
+    editDocument: PropTypes.func.isRequired,
+    editDocumentCancel: PropTypes.func.isRequired,
+    getDocuments: PropTypes.func.isRequired,
+    saveDocument: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.getDocuments();
   }
@@ -69,7 +85,7 @@ export default class AllDocumentsPage extends Component {
             </td>
             <td>
               <select
-                value={item.type}
+                defaultValue={item.type}
                 ref={(select) => { this.documentType = select; }}
                 className='form-control'>
                 <option>Закон</option>
@@ -156,19 +172,3 @@ export default class AllDocumentsPage extends Component {
     );
   }
 }
-
-AllDocumentsPage.propTypes = {
-  documents: PropTypes.shape({
-    data: PropTypes.array.isRequired,
-    edit: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]).isRequired,
-  }).isRequired,
-  addDocument: PropTypes.func.isRequired,
-  deleteDocument: PropTypes.func.isRequired,
-  editDocument: PropTypes.func.isRequired,
-  editDocumentCancel: PropTypes.func.isRequired,
-  getDocuments: PropTypes.func.isRequired,
-  saveDocument: PropTypes.func.isRequired,
-};

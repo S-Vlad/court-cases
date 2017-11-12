@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 
 
 export default class AllParticipantsPage extends Component {
+  static propTypes = {
+    participants: PropTypes.object.isRequired,
+    addParticipant: PropTypes.func.isRequired,
+    deleteParticipant: PropTypes.func.isRequired,
+    editParticipant: PropTypes.func.isRequired,
+    editParticipantCancel: PropTypes.func.isRequired,
+    getParticipants: PropTypes.func.isRequired,
+    saveParticipant: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.getParticipants();
   }
@@ -206,13 +216,3 @@ export default class AllParticipantsPage extends Component {
     );
   }
 }
-
-AllParticipantsPage.propTypes = {
-  participants: PropTypes.object.isRequired,
-  addParticipant: PropTypes.func.isRequired,
-  deleteParticipant: PropTypes.func.isRequired,
-  editParticipant: PropTypes.func.isRequired,
-  editParticipantCancel: PropTypes.func.isRequired,
-  getParticipants: PropTypes.func.isRequired,
-  saveParticipant: PropTypes.func.isRequired,
-};

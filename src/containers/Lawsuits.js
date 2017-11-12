@@ -17,6 +17,22 @@ const mapDispatchToProps = dispatch => ({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Lawsuits extends Component {
+  static propTypes = {
+    lawsuits: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        lawsuit: PropTypes.string,
+      }),
+    }).isRequired,
+    lawsuitActions: PropTypes.shape({
+      getLawsuits: PropTypes.func.isRequired,
+      findLawsuits: PropTypes.func.isRequired,
+    }).isRequired,
+  };
+
   render() {
     const { getLawsuits, findLawsuits } = this.props.lawsuitActions,
           { lawsuits } = this.props;
@@ -47,19 +63,3 @@ export default class Lawsuits extends Component {
     );
   }
 }
-
-Lawsuits.propTypes = {
-  lawsuits: PropTypes.object.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      lawsuit: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-  lawsuitActions: PropTypes.shape({
-    getLawsuits: PropTypes.func.isRequired,
-    findLawsuits: PropTypes.func.isRequired,
-  }).isRequired,
-};
