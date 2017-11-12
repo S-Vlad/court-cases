@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
 export default class CurrentLawsuitPage extends Component {
@@ -8,56 +9,51 @@ export default class CurrentLawsuitPage extends Component {
 
   render() {
     const props = this.props,
-          data = props.lawsuits.data;
+          data = props.lawsuits.data || [];
 
     let template = [];
 
-    if (data && data.length > 0) {
+    template = data.map((item) => {
+      let claimant,
+          respondent,
+          judge;
 
-      template = data.map((item, index) => {
+      const participants = item.participants_id;
 
-        let claimant,
-            respondent,
-            judge,
-            participants = item.participants_id;
-
-        participants.forEach((itemParticipants) => {
-          if (itemParticipants.type === 'Истец') {
-            claimant = itemParticipants;
-          } else if (itemParticipants.type === 'Ответчик') {
-            respondent = itemParticipants;
-          } else {
-            judge = itemParticipants;
-          }
-        });
-
-        return(
-          <tr key={index}>
-            <td>{item.state}</td>
-            <td>{claimant.name ? claimant.name : ''}</td>
-            <td>{respondent.name ? respondent.name : ''}</td>
-            <td>{judge.name ? judge.name : ''}</td>
-            <td>{item.type}</td>
-            <td>{item.schedule_id[0] ? item.schedule_id[0].date_ : ''}</td>
-            <td>{item.documents_id[0] ? item.documents_id[0].name : ''}</td>
-          </tr>
-        );
+      participants.forEach((itemParticipants) => {
+        if (itemParticipants.type === 'Истец') {
+          claimant = itemParticipants;
+        } else if (itemParticipants.type === 'Ответчик') {
+          respondent = itemParticipants;
+        } else {
+          judge = itemParticipants;
+        }
       });
-    } else {
-      template = (<h4>Такого документа нет</h4>);
-    }
+
+      return (
+        <tr key={item.objectId}>
+          <td>{item.state}</td>
+          <td>
+            <p><span>Истец:</span> {claimant ? claimant.name : ''}</p>
+            <p><span>Ответчик:</span> {respondent ? respondent.name : ''}</p>
+            <p><span>Судья:</span> {judge ? judge.name : ''}</p>
+          </td>
+          <td>{item.type}</td>
+          <td>{item.schedule_id[0] ? item.schedule_id[0].date_ : ''}</td>
+          <td>{item.documents_id[0] ? item.documents_id[0].name : ''}</td>
+        </tr>
+      );
+    });
 
     if (data && data.length > 0) {
-      return(
+      return (
         <div>
           <h3>Судебное дело</h3>
           <table className='table table-bordered lawsuit'>
             <thead>
               <tr>
                 <th>Статус</th>
-                <th>Истец</th>
-                <th>Ответчик</th>
-                <th>Судья</th>
+                <th>Стороны</th>
                 <th>Тип</th>
                 <th>Дата</th>
                 <th>Статья</th>
@@ -69,12 +65,17 @@ export default class CurrentLawsuitPage extends Component {
           </table>
         </div>
       );
-    } else {
-      return (
-        <div>
-          {template}
-        </div>
-      );
     }
+
+    return (
+      <div>
+        {template}
+      </div>
+    );
   }
 }
+
+CurrentLawsuitPage.propTypes = {
+  location: PropTypes.object.isRequired,
+  getLawsuits: PropTypes.func.isRequired,
+};

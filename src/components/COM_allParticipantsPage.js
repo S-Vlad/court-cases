@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
 export default class AllParticipantsPage extends Component {
@@ -10,20 +11,26 @@ export default class AllParticipantsPage extends Component {
     this.props.deleteParticipant(participantId);
   }
 
-  addButtonHandler(participantId) {
-    let nameField = this.refs.addParticipantName,
-        addressField = this.refs.addParticipantAddress,
-        phoneField = this.refs.addParticipantPhone,
-        typeField = this.refs.addParticipantType;
+  addButtonHandler = () => {
+    const refs = {
+      addParticipantName: this.addParticipantName,
+      addParticipantAddress: this.addParticipantAddress,
+      addParticipantPhone: this.addParticipantPhone,
+      addParticipantType: this.addParticipantType,
+    };
+
+    const nameField = refs.addParticipantName,
+          addressField = refs.addParticipantAddress,
+          phoneField = refs.addParticipantPhone,
+          typeField = refs.addParticipantType;
 
     if (nameField.value && typeField.value) {
-      this.props.addParticipant(participantId, this.refs);
+      this.props.addParticipant(refs);
 
       nameField.value = '';
       addressField.value = '';
       phoneField.value = '';
       typeField.value = '';
-
     } else {
       alert('Введите имя и занимаемую сторону');
     }
@@ -34,15 +41,20 @@ export default class AllParticipantsPage extends Component {
   }
 
   saveButtonHandler(participantId) {
+    const refs = {
+      participantName: this.participantName.value,
+      participantAddress: this.participantAddress.value,
+      participantPhone: this.participantPhone.value,
+      participantType: this.participantType.value,
+    };
+
     this.props.participants.data.forEach((item) => {
-
       if (item.objectId === participantId) {
-        if (item.name !== this.refs.participantName.value ||
-            item.address !== this.refs.participantAddress.value ||
-            item.phone !== this.refs.participantPhone.value ||
-            item.type !== this.refs.participantType.value) {
-          this.props.saveParticipant(participantId, this.refs);
-
+        if (item.name !== refs.participantName ||
+            item.address !== refs.participantAddress ||
+            item.phone !== refs.participantPhone ||
+            item.type !== refs.participantType) {
+          this.props.saveParticipant(participantId, refs);
         } else {
           this.props.editParticipantCancel();
         }
@@ -57,37 +69,35 @@ export default class AllParticipantsPage extends Component {
     let template = [];
 
     if (data) {
-
-        template = data.map((item, index) => {
-
+      template = data.map((item) => {
         if (this.props.participants.edit === item.objectId) {
-          return(
-            <tr key={index}>
+          return (
+            <tr key={item.objectId}>
               <td>
                 <input
+                  ref={(input) => { this.participantName = input; }}
                   className='form-control'
-                  ref='participantName'
                   defaultValue={item.name}
                 />
               </td>
               <td>
                 <input
+                  ref={(input) => { this.participantAddress = input; }}
                   className='form-control'
-                  ref='participantAddress'
                   defaultValue={item.address}
                 />
               </td>
               <td>
                 <input
+                  ref={(input) => { this.participantPhone = input; }}
                   className='form-control'
-                  ref='participantPhone'
                   defaultValue={item.phone}
                 />
               </td>
               <td>
                 <input
+                  ref={(input) => { this.participantType = input; }}
                   className='form-control'
-                  ref='participantType'
                   defaultValue={item.type}
                 />
               </td>
@@ -101,93 +111,108 @@ export default class AllParticipantsPage extends Component {
               </td>
             </tr>
           );
-        } else {
-          return(
-           <tr key={index}>
-              <td
-                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
-                {item.name}
-              </td>
-              <td
-                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
-                {item.address}
-              </td>
-              <td
-                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
-                {item.phone}
-              </td>
-              <td
-                onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
-                {item.type}
-              </td>
-              <td className='text-center'>
-                <button
-                  onClick={this.deleteButtonHandler.bind(this, item.objectId)}
-                  type='button'
-                  className='btn btn-danger'>
-                  Удалить
-                </button>
-              </td>
-            </tr>
-          );
         }
 
+        return (
+          <tr key={item.objectId}>
+            <td
+              onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+              {item.name}
+            </td>
+            <td
+              onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+              {item.address}
+            </td>
+            <td
+              onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+              {item.phone}
+            </td>
+            <td
+              onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+              {item.type}
+            </td>
+            <td className='text-center'>
+              <button
+                onClick={this.deleteButtonHandler.bind(this, item.objectId)}
+                type='button'
+                className='btn btn-danger'>
+                Удалить
+              </button>
+            </td>
+          </tr>
+        );
       });
     }
 
-    return(
-        <div>
-          <h3>Участники</h3>
-          <table className='table table-bordered participants'>
-            <thead>
-              <tr>
-                <th>Имя</th>
-                <th>Адрес</th>
-                <th>Телефон</th>
-                <th>Сторона</th>
-                <th>Действия</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input
-                    ref='addParticipantName'
-                    className='form-control'
-                    placeholder='Имя' />
-                </td>
-                <td>
-                  <input
-                    ref='addParticipantAddress'
-                    className='form-control'
-                    placeholder='Адресс' />
-                </td>
-                <td>
-                  <input
-                    ref='addParticipantPhone'
-                    className='form-control'
-                    placeholder='Телефон' />
-                </td>
-                <td>
-                  <input
-                    ref='addParticipantType'
-                    className='form-control'
-                    placeholder='Сторона' />
-                </td>
-                <td className='text-center'>
-                  <button
-                    onClick={this.addButtonHandler.bind(this, this.props.participants.objectId)}
-                    type='button'
-                    className='btn btn-info'>
-                    Добавить
-                  </button>
-                </td>
-              </tr>
-              {template}
-            </tbody>
-          </table>
-          <p className='alert alert-info' role='alert'>Для редактирования дважды кликните на ячейку.</p>
-        </div>
-      );
+    return (
+      <div>
+        <h3>Участники</h3>
+        <table className='table table-bordered participants'>
+          <thead>
+            <tr>
+              <th>Имя</th>
+              <th>Адрес</th>
+              <th>Телефон</th>
+              <th>Сторона</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  ref={(input) => { this.addParticipantName = input; }}
+                  className='form-control'
+                  placeholder='Имя'
+                />
+              </td>
+              <td>
+                <input
+                  ref={(input) => { this.addParticipantAddress = input; }}
+                  className='form-control'
+                  placeholder='Адресс'
+                />
+              </td>
+              <td>
+                <input
+                  ref={(input) => { this.addParticipantPhone = input; }}
+                  className='form-control'
+                  placeholder='Телефон'
+                />
+              </td>
+              <td>
+                <input
+                  ref={(input) => { this.addParticipantType = input; }}
+                  className='form-control'
+                  placeholder='Сторона'
+                />
+              </td>
+              <td className='text-center'>
+                <button
+                  onClick={this.addButtonHandler}
+                  type='button'
+                  className='btn btn-info'>
+                  Добавить
+                </button>
+              </td>
+            </tr>
+            {template}
+          </tbody>
+        </table>
+        <p className='alert alert-info' role='alert'>
+          Для редактирования дважды кликните на ячейку.
+        </p>
+      </div>
+    );
   }
 }
+
+AllParticipantsPage.propTypes = {
+  participants: PropTypes.object.isRequired,
+  addParticipant: PropTypes.func.isRequired,
+  deleteParticipant: PropTypes.func.isRequired,
+  editParticipant: PropTypes.func.isRequired,
+  editParticipantCancel: PropTypes.func.isRequired,
+  getParticipants: PropTypes.func.isRequired,
+  saveParticipant: PropTypes.func.isRequired,
+};

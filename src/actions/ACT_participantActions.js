@@ -1,109 +1,102 @@
-import Backendless from '../backendless.js';
-import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT, EDIT_PARTICIPANT_CANCEL , SAVE_PARTICIPANT } from '../constants/CON_participants.js';
+import Backendless from '../backendless';
+import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT, EDIT_PARTICIPANT_CANCEL, SAVE_PARTICIPANT } from '../constants/CON_participants';
 
 
 function getParticipantsFunc(queryBuilder, dispatch, type) {
-
   let participantsArray = [];
 
   Backendless.Data
     .of('Participants')
     .find(queryBuilder)
     .then((receivedData) => {
-      for (let key in receivedData) {
-        participantsArray.push(receivedData[key]);
-      }
+      participantsArray = receivedData.map(item => item);
 
       dispatch({
         type: type,
-        payload: participantsArray
+        payload: participantsArray,
       });
-    })
+    });
 }
 
 export function getParticipants() {
   return (dispatch) => {
-
-    let queryBuilder = Backendless.DataQueryBuilder.create();
+    const queryBuilder = Backendless.DataQueryBuilder.create();
 
     queryBuilder.setSortBy(['created DESC']);
 
     getParticipantsFunc(queryBuilder, dispatch, GET_PARTICIPANTS);
-  }
+  };
 }
 
 export function deleteParticipant(participantId) {
   return (dispatch) => {
     Backendless.Data
       .of('Participants')
-      .remove({objectId: participantId})
+      .remove({ objectId: participantId })
       .then(() => {
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, DELETE_PARTICIPANT);
       });
-  }
+  };
 }
 
-export function addParticipant(participantId, refParticipantInput) {
+export function addParticipant(refs) {
   return (dispatch) => {
     Backendless.Data
       .of('Participants')
       .save({
-        name: refParticipantInput.addParticipantName.value,
-        address: refParticipantInput.addParticipantAddress.value,
-        phone: refParticipantInput.addParticipantPhone.value,
-        type: refParticipantInput.addParticipantType.value,
-        objectId: participantId
+        name: refs.addParticipantName.value,
+        address: refs.addParticipantAddress.value,
+        phone: refs.addParticipantPhone.value,
+        type: refs.addParticipantType.value,
       })
       .then(() => {
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, ADD_PARTICIPANT);
-
       });
-  }
+  };
 }
 
 export function editParticipant(participantId) {
   return (dispatch) => {
     dispatch({
       type: EDIT_PARTICIPANT,
-      payload: participantId
+      payload: participantId,
     });
-  }
+  };
 }
 
 export function editParticipantCancel() {
   return (dispatch) => {
     dispatch({
-      type: EDIT_PARTICIPANT_CANCEL
+      type: EDIT_PARTICIPANT_CANCEL,
     });
-  }
+  };
 }
 
-export function saveParticipant(participantId, refParticipantInput) {
+export function saveParticipant(participantId, refs) {
   return (dispatch) => {
-
     Backendless.Data
       .of('Participants')
       .save({
-        name: refParticipantInput.participantName.value,
-        address: refParticipantInput.participantAddress.value,
-        phone: refParticipantInput.participantPhone.value,
-        type: refParticipantInput.participantType.value,
-        objectId: participantId
+        name: refs.participantName,
+        address: refs.participantAddress,
+        phone: refs.participantPhone,
+        type: refs.participantType,
+        objectId: participantId,
       })
       .then(() => {
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, SAVE_PARTICIPANT);
-      })
-  }
+      });
+  };
 }

@@ -1,31 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as participantActions from '../actions/ACT_participantActions.js';
-import AllParticipantsPage from '../components/COM_allParticipantsPage.js';
+import PropTypes from 'prop-types';
+
+import * as participantActions from '../actions/ACT_participantActions';
+import AllParticipantsPage from '../components/COM_allParticipantsPage';
 
 
-class Participants extends Component {
+const mapStateToProps = state => ({ participants: state.participants });
+const mapDispatchToProps = dispatch => ({
+  participantActions: bindActionCreators(participantActions, dispatch),
+
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Participants extends Component {
   render() {
     const { participants } = this.props,
-          { getParticipants, deleteParticipant, addParticipant, editParticipant, editParticipantCancel, saveParticipant } = this.props.participantActions;
+          {
+            getParticipants, deleteParticipant, addParticipant,
+            editParticipant, editParticipantCancel, saveParticipant,
+          } = this.props.participantActions;
 
     return (
-      <AllParticipantsPage participants={participants} getParticipants={getParticipants} deleteParticipant={deleteParticipant} addParticipant={addParticipant} editParticipant={editParticipant} editParticipantCancel={editParticipantCancel} saveParticipant={saveParticipant} />
+      <AllParticipantsPage
+        participants={participants}
+        addParticipant={addParticipant}
+        deleteParticipant={deleteParticipant}
+        editParticipant={editParticipant}
+        editParticipantCancel={editParticipantCancel}
+        getParticipants={getParticipants}
+        saveParticipant={saveParticipant}
+      />
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    participants: state.participants
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    participantActions: bindActionCreators(participantActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Participants)
+Participants.propTypes = {
+  participants: PropTypes.object.isRequired,
+  participantActions: PropTypes.shape({
+    addParticipant: PropTypes.func.isRequired,
+    deleteParticipant: PropTypes.func.isRequired,
+    editParticipant: PropTypes.func.isRequired,
+    editParticipantCancel: PropTypes.func.isRequired,
+    getParticipants: PropTypes.func.isRequired,
+    saveParticipant: PropTypes.func.isRequired,
+  }).isRequired,
+};

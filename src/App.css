@@ -47,33 +47,21 @@ header {
   margin-bottom: 10px;
 }
 
-.table > tbody > tr > td {
-  vertical-align: middle;
-}
-
-tbody > tr > td span:hover{
-  transition: .5s ease-out all;
-  color: red;
-  cursor: pointer;
-}
-
 .lawsuit th:nth-child(1) {
-  width: 9%;
+  width: 10%;
 }
 
-.lawsuit th:nth-child(2),
-.lawsuit th:nth-child(3),
-.lawsuit th:nth-child(4),
-.lawsuit th:nth-child(5) {
-  width: 11%;
+.lawsuit th:nth-child(2) {
+  width: 18%;
+  min-width: 180px;
 }
 
-.lawsuit th:nth-child(6) {
-  width: 8%;
+.lawsuit td > p {
+  margin-bottom: 5px;
 }
 
-.lawsuit th:nth-child(7) {
-  width: 39%;
+.lawsuit td > p > span {
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {

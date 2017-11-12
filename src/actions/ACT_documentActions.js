@@ -1,110 +1,104 @@
-import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUMENT, ADD_DOCUMENT} from '../constants/CON_documents.js';
-import Backendless from '../backendless.js';
+import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUMENT, ADD_DOCUMENT } from '../constants/CON_documents';
+import Backendless from '../backendless';
 
 
 function getDocumentsFunc(queryBuilder, dispatch, type) {
   let documentsArray = [];
 
   Backendless.Data
-  .of('Documents')
-  .find(queryBuilder)
-  .then((receivedData) => {
-    for (let key in receivedData) {
-      documentsArray.push(receivedData[key]);
-    }
+    .of('Documents')
+    .find(queryBuilder)
+    .then((receivedData) => {
+      documentsArray = receivedData.map(item => item);
 
-    dispatch({
-      type: type,
-      payload: documentsArray
-    })
-  });
+      dispatch({
+        type: type,
+        payload: documentsArray,
+      });
+    });
 }
 
 export function getDocuments(documentId) {
   return (dispatch) => {
-
-    let queryBuilder = Backendless.DataQueryBuilder.create();
+    const queryBuilder = Backendless.DataQueryBuilder.create();
 
     queryBuilder.setSortBy(['created DESC']);
 
     if (documentId) {
-      queryBuilder.setWhereClause("objectId =  '"+ documentId + "'");
+      queryBuilder.setWhereClause("objectId =  '" + documentId + "'");
     } else {
       queryBuilder.setWhereClause();
     }
 
     getDocumentsFunc(queryBuilder, dispatch, GET_DOCUMENTS_SUCCESS);
-  }
+  };
 }
 
 export function editDocument(documentId) {
   return (dispatch) => {
     dispatch({
       type: EDIT_DOCUMENT,
-      payload: documentId
+      payload: documentId,
     });
-  }
+  };
 }
 
 export function editDocumentCancel() {
   return (dispatch) => {
     dispatch({
-      type: EDIT_DOCUMENT_CANCEL
+      type: EDIT_DOCUMENT_CANCEL,
     });
-  }
+  };
 }
 
-export function saveDocument(documentId, refDocumentInput) {
+export function saveDocument(documentId, refs) {
   return (dispatch) => {
     Backendless.Data
       .of('Documents')
       .save({
-        name: refDocumentInput.documentName.value,
-        type: refDocumentInput.documentType.value,
-        objectId: documentId
+        name: refs.documentName,
+        type: refs.documentType,
+        objectId: documentId,
       })
       .then(() => {
-
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
-        getDocumentsFunc(queryBuilder, dispatch, SAVE_DOCUMENT)
-      })
-  }
+        getDocumentsFunc(queryBuilder, dispatch, SAVE_DOCUMENT);
+      });
+  };
 }
 
-export function addDocument(refDocumentInput) {
+export function addDocument(refs) {
   return (dispatch) => {
-
     Backendless.Data
       .of('Documents')
       .save({
-        name: refDocumentInput.addDocumentInput.value,
-        type: refDocumentInput.addDocumentSelect.value
+        name: refs.addDocumentName.value,
+        type: refs.addDocumentType.value,
       })
       .then(() => {
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
         getDocumentsFunc(queryBuilder, dispatch, ADD_DOCUMENT);
       });
-  }
+  };
 }
 
 export function deleteDocument(objectId) {
   return (dispatch) => {
-
     Backendless.Data
       .of('Documents')
-      .remove({objectId: objectId})
+      .remove({ objectId: objectId })
       .then(() => {
-        let queryBuilder = Backendless.DataQueryBuilder.create();
+        const queryBuilder = Backendless.DataQueryBuilder.create();
 
         queryBuilder.setSortBy(['created DESC']);
 
         getDocumentsFunc(queryBuilder, dispatch, GET_DOCUMENTS_SUCCESS);
-      })
-  }
+      });
+  };
 }
