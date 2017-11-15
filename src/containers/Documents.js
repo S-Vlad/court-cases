@@ -27,11 +27,15 @@ export default class Documents extends Component {
   };
 
   render() {
-    const {
-            getDocuments, editDocument, editDocumentCancel,
-            saveDocument, addDocument, deleteDocument,
-          } = this.props.documentActions;
     const { documents } = this.props;
+    const {
+      addDocument,
+      deleteDocument,
+      editDocument,
+      editDocumentCancel,
+      getDocuments,
+      saveDocument,
+    } = this.props.documentActions;
 
     const template = (
       <AllDocumentsPage

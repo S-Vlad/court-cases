@@ -5,6 +5,8 @@ import Backendless from '../backendless';
 function getDocumentsFunc(queryBuilder, dispatch, type) {
   let documentsArray = [];
 
+  queryBuilder.setSortBy(['created DESC']);
+
   Backendless.Data
     .of('Documents')
     .find(queryBuilder)
@@ -21,8 +23,6 @@ function getDocumentsFunc(queryBuilder, dispatch, type) {
 export function getDocuments(documentId) {
   return (dispatch) => {
     const queryBuilder = Backendless.DataQueryBuilder.create();
-
-    queryBuilder.setSortBy(['created DESC']);
 
     if (documentId) {
       queryBuilder.setWhereClause("objectId =  '" + documentId + "'");
@@ -63,8 +63,6 @@ export function saveDocument(documentId, refs) {
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
 
-        queryBuilder.setSortBy(['created DESC']);
-
         getDocumentsFunc(queryBuilder, dispatch, SAVE_DOCUMENT);
       });
   };
@@ -81,8 +79,6 @@ export function addDocument(refs) {
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
 
-        queryBuilder.setSortBy(['created DESC']);
-
         getDocumentsFunc(queryBuilder, dispatch, ADD_DOCUMENT);
       });
   };
@@ -95,8 +91,6 @@ export function deleteDocument(objectId) {
       .remove({ objectId: objectId })
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
-
-        queryBuilder.setSortBy(['created DESC']);
 
         getDocumentsFunc(queryBuilder, dispatch, GET_DOCUMENTS_SUCCESS);
       });

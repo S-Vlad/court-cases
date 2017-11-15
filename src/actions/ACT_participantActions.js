@@ -5,6 +5,9 @@ import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT
 function getParticipantsFunc(queryBuilder, dispatch, type) {
   let participantsArray = [];
 
+  queryBuilder.setSortBy(['created DESC']);
+  queryBuilder.setPageSize(12);
+
   Backendless.Data
     .of('Participants')
     .find(queryBuilder)
@@ -22,8 +25,6 @@ export function getParticipants() {
   return (dispatch) => {
     const queryBuilder = Backendless.DataQueryBuilder.create();
 
-    queryBuilder.setSortBy(['created DESC']);
-
     getParticipantsFunc(queryBuilder, dispatch, GET_PARTICIPANTS);
   };
 }
@@ -35,8 +36,6 @@ export function deleteParticipant(participantId) {
       .remove({ objectId: participantId })
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
-
-        queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, DELETE_PARTICIPANT);
       });
@@ -55,8 +54,6 @@ export function addParticipant(refs) {
       })
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
-
-        queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, ADD_PARTICIPANT);
       });
@@ -93,8 +90,6 @@ export function saveParticipant(participantId, refs) {
       })
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
-
-        queryBuilder.setSortBy(['created DESC']);
 
         getParticipantsFunc(queryBuilder, dispatch, SAVE_PARTICIPANT);
       });

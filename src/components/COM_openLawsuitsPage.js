@@ -55,7 +55,7 @@ export default class CurrentLawsuitsPage extends Component {
     return (
       <div>
         <h3>Текущие судебные дела</h3>
-        <table className='table table-bordered lawsuit'>
+        <table className='table table-bordered table-responsive lawsuit'>
           <thead>
             <tr>
               <th>Статус</th>

@@ -28,11 +28,15 @@ export default class Participants extends Component {
   };
 
   render() {
-    const { participants } = this.props,
-          {
-            getParticipants, deleteParticipant, addParticipant,
-            editParticipant, editParticipantCancel, saveParticipant,
-          } = this.props.participantActions;
+    const { participants } = this.props;
+    const {
+      addParticipant,
+      deleteParticipant,
+      editParticipant,
+      editParticipantCancel,
+      getParticipants,
+      saveParticipant,
+    } = this.props.participantActions;
 
     return (
       <AllParticipantsPage

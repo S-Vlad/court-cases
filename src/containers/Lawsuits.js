@@ -34,8 +34,11 @@ export default class Lawsuits extends Component {
   };
 
   render() {
-    const { getLawsuits, findLawsuits } = this.props.lawsuitActions,
-          { lawsuits } = this.props;
+    const { lawsuits } = this.props;
+    const {
+      findLawsuits,
+      getLawsuits,
+    } = this.props.lawsuitActions;
 
     let ChildElement;
 

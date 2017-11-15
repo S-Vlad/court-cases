@@ -7,32 +7,46 @@ import '../App.css';
 export default function Header() {
   return (
     <header>
-      <nav className='navbar navbar-default'>
-        <div className='container'>
-          <div className='navbar-header'>
-            <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar' aria-expanded='false' aria-controls='navbar'>
-              <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar' />
-              <span className='icon-bar' />
-              <span className='icon-bar' />
-            </button>
-          </div>
-          <div id='navbar' className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav'>
-              <li>
-                <NavLink to='/open-lawsuits' activeClassName='active'>Главная</NavLink>
-              </li>
-              <li>
-                <NavLink to='/lawsuits' activeClassName='active'>Судебные дела</NavLink>
-              </li>
-              <li>
-                <NavLink to='/documents' activeClassName='active'>Список документов</NavLink>
-              </li>
-              <li>
-                <NavLink to='/participants' activeClassName='active'>Участники</NavLink>
-              </li>
-            </ul>
-          </div>
+      <nav className='navbar navbar-expand-md navbar-light bg-light'>
+        <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+          <span className='navbar-toggler-icon' />
+        </button>
+
+        <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+          <ul className='navbar-nav mr-auto'>
+            <li className='nav-item'>
+              <NavLink
+                to='/open-lawsuits'
+                className='nav-link'
+                activeClassName='active'>
+                Главная
+              </NavLink>
+            </li>
+            <li className='nav-item'>
+              <NavLink
+                to='/lawsuits'
+                className='nav-link'
+                activeClassName='active'>
+                Судебные дела
+              </NavLink>
+            </li>
+            <li className='nav-item'>
+              <NavLink
+                to='/documents'
+                className='nav-link'
+                activeClassName='active'>
+                Список документов
+              </NavLink>
+            </li>
+            <li className='nav-item'>
+              <NavLink
+                to='/participants'
+                className='nav-link'
+                activeClassName='active'>
+                Участники
+              </NavLink>
+            </li>
+          </ul>
         </div>
       </nav>
     </header>

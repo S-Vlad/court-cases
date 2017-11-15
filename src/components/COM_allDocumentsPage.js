@@ -127,7 +127,7 @@ export default class AllDocumentsPage extends Component {
     return (
       <div>
         <h3>Документы</h3>
-        <table className='table table-bordered documents'>
+        <table className='table table-bordered table-responsive documents'>
           <thead>
             <tr>
               <th>Название</th>
@@ -141,7 +141,7 @@ export default class AllDocumentsPage extends Component {
                 <textarea
                   ref={(textarea) => { this.addDocumentName = textarea; }}
                   placeholder='Текст нового документа'
-                  className='form-control'
+                  className='form-control add-field'
                   rows='1'
                 />
               </td>
@@ -157,7 +157,7 @@ export default class AllDocumentsPage extends Component {
                 <button
                   onClick={this.addButtonHandler}
                   type='button'
-                  className='btn btn-info'>
+                  className='btn btn-info add-button'>
                   Добавить
                 </button>
               </td>

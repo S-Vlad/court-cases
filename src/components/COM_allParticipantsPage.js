@@ -157,7 +157,7 @@ export default class AllParticipantsPage extends Component {
     return (
       <div>
         <h3>Участники</h3>
-        <table className='table table-bordered participants'>
+        <table className='table table-bordered table-responsive participants'>
           <thead>
             <tr>
               <th>Имя</th>
@@ -172,28 +172,28 @@ export default class AllParticipantsPage extends Component {
               <td>
                 <input
                   ref={(input) => { this.addParticipantName = input; }}
-                  className='form-control'
+                  className='form-control add-participant-name'
                   placeholder='Имя'
                 />
               </td>
               <td>
                 <input
                   ref={(input) => { this.addParticipantAddress = input; }}
-                  className='form-control'
+                  className='form-control add-participant-address'
                   placeholder='Адресс'
                 />
               </td>
               <td>
                 <input
                   ref={(input) => { this.addParticipantPhone = input; }}
-                  className='form-control'
+                  className='form-control add-participant-phone'
                   placeholder='Телефон'
                 />
               </td>
               <td>
                 <input
                   ref={(input) => { this.addParticipantType = input; }}
-                  className='form-control'
+                  className='form-control add-participant-type'
                   placeholder='Сторона'
                 />
               </td>
@@ -201,7 +201,7 @@ export default class AllParticipantsPage extends Component {
                 <button
                   onClick={this.addButtonHandler}
                   type='button'
-                  className='btn btn-info'>
+                  className='btn btn-info add-button'>
                   Добавить
                 </button>
               </td>

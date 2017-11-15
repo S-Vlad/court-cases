@@ -74,11 +74,11 @@ export default class AllLawsuitsPage extends Component {
           <button
             onClick={this.findButtonHandler}
             type='button'
-            className='btn btn-default'>
+            className='btn btn-primary search-button'>
             Поиск
           </button>
         </form>
-        <table className='table table-bordered lawsuit'>
+        <table className='table table-bordered table-responsive lawsuit'>
           <thead>
             <tr>
               <th>Статус</th>
