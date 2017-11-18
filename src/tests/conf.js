@@ -1,12 +1,17 @@
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['documents.test.js', 'all-lawsuits.test.js', 'participants.test.js'],
+  specs: [
+    'allLawsuits.test.js',
+    'documents.test.js',
+    'openLawsuits.test.js',
+    'participants.test.js',
+  ],
   onPrepare: () => {
-    browser.ignoreSynchronization = true
+    browser.ignoreSynchronization = true;
   },
   capabilities: {
     browserName: 'chrome',
     shardTestFiles: true,
-    maxInstances: 3,
+    maxInstances: 4,
   },
 };
