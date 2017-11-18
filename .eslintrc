@@ -1,7 +1,10 @@
 {
   "parser": "babel-eslint",
   "extends": "airbnb",
-   "env": {
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
     "browser": true,
     "node": true,
     "es6": true
@@ -10,10 +13,8 @@
     "react"
   ],
   "rules": {
-    // "no-debugger": 0,
     // "no-console": 0,
-    "no-underscore-dangle": 0,
-    "eol-last": 0,
+    "eol-last": "off",
     "strict": ["error", "global"],
     "quotes": ["warn", "single"],
     "jsx-quotes": ["warn", "prefer-single"],
