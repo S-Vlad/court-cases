@@ -13,15 +13,15 @@ export default class CurrentLawsuitPage extends Component {
   }
 
   render() {
-    const props = this.props,
-          data = props.lawsuits.data || [];
+    const props = this.props;
+    const data = props.lawsuits.data || [];
 
     let template = [];
 
     template = data.map((item) => {
-      let claimant,
-          respondent,
-          judge;
+      let claimant;
+      let respondent;
+      let judge;
 
       const participants = item.participants_id;
 

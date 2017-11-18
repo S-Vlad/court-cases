@@ -20,9 +20,9 @@ export default class CurrentLawsuitsPage extends Component {
       const data = props.lawsuits.data;
 
       template = data.map((item) => {
-        let claimant,
-            respondent,
-            judge;
+        let claimant;
+        let respondent;
+        let judge;
 
         const participants = item.participants_id;
 

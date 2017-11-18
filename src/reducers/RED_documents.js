@@ -1,4 +1,10 @@
-import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUMENT, ADD_DOCUMENT } from '../constants/CON_documents';
+import {
+  GET_DOCUMENTS_SUCCESS,
+  EDIT_DOCUMENT,
+  EDIT_DOCUMENT_CANCEL,
+  SAVE_DOCUMENT,
+  ADD_DOCUMENT,
+} from '../constants/CON_documents';
 
 
 const initialState = {

@@ -1,21 +1,23 @@
-import { GET_DOCUMENTS_SUCCESS, EDIT_DOCUMENT, EDIT_DOCUMENT_CANCEL, SAVE_DOCUMENT, ADD_DOCUMENT } from '../constants/CON_documents';
+import {
+  GET_DOCUMENTS_SUCCESS,
+  EDIT_DOCUMENT,
+  EDIT_DOCUMENT_CANCEL,
+  SAVE_DOCUMENT,
+  ADD_DOCUMENT,
+} from '../constants/CON_documents';
 import Backendless from '../backendless';
 
 
 function getDocumentsFunc(queryBuilder, dispatch, type) {
-  let documentsArray = [];
-
   queryBuilder.setSortBy(['created DESC']);
 
   Backendless.Data
     .of('Documents')
     .find(queryBuilder)
-    .then((receivedData) => {
-      documentsArray = receivedData.map(item => item);
-
+    .then((receivedDocuments) => {
       dispatch({
-        type: type,
-        payload: documentsArray,
+        type,
+        payload: receivedDocuments,
       });
     });
 }
@@ -25,7 +27,7 @@ export function getDocuments(documentId) {
     const queryBuilder = Backendless.DataQueryBuilder.create();
 
     if (documentId) {
-      queryBuilder.setWhereClause("objectId =  '" + documentId + "'");
+      queryBuilder.setWhereClause(`objectId = '${documentId}'`);
     } else {
       queryBuilder.setWhereClause();
     }
@@ -84,11 +86,11 @@ export function addDocument(refs) {
   };
 }
 
-export function deleteDocument(objectId) {
+export function deleteDocument(documentId) {
   return (dispatch) => {
     Backendless.Data
       .of('Documents')
-      .remove({ objectId: objectId })
+      .remove({ objectId: documentId })
       .then(() => {
         const queryBuilder = Backendless.DataQueryBuilder.create();
 

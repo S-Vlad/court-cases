@@ -19,16 +19,16 @@ export default class AllLawsuitsPage extends Component {
 
   render() {
     const props = this.props;
-    let template = [],
-        notFoundMessage;
+    let template = [];
+    let notFoundMessage;
 
     if (props.lawsuits.data) {
       const data = props.lawsuits.data;
 
       template = data.map((item) => {
-        let claimant,
-            respondent,
-            judge;
+        let claimant;
+        let respondent;
+        let judge;
 
         item.participants_id.forEach((itemParticipants) => {
           if (itemParticipants.type === 'Истец') {

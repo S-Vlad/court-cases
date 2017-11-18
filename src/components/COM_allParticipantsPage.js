@@ -29,10 +29,10 @@ export default class AllParticipantsPage extends Component {
       addParticipantType: this.addParticipantType,
     };
 
-    const nameField = refs.addParticipantName,
-          addressField = refs.addParticipantAddress,
-          phoneField = refs.addParticipantPhone,
-          typeField = refs.addParticipantType;
+    const nameField = refs.addParticipantName;
+    const addressField = refs.addParticipantAddress;
+    const phoneField = refs.addParticipantPhone;
+    const typeField = refs.addParticipantType;
 
     if (nameField.value && typeField.value) {
       this.props.addParticipant(refs);
@@ -73,8 +73,8 @@ export default class AllParticipantsPage extends Component {
   }
 
   render() {
-    const props = this.props,
-          data = props.participants.data;
+    const props = this.props;
+    const data = props.participants.data;
 
     let template = [];
 

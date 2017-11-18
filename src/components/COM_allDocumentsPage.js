@@ -66,8 +66,8 @@ export default class AllDocumentsPage extends Component {
   }
 
   render() {
-    const props = this.props,
-          data = props.documents.data || [];
+    const props = this.props;
+    const data = props.documents.data || [];
 
     let template = [];
 

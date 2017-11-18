@@ -1,22 +1,25 @@
 import Backendless from '../backendless';
-import { GET_PARTICIPANTS, DELETE_PARTICIPANT, ADD_PARTICIPANT, EDIT_PARTICIPANT, EDIT_PARTICIPANT_CANCEL, SAVE_PARTICIPANT } from '../constants/CON_participants';
+import {
+  GET_PARTICIPANTS,
+  DELETE_PARTICIPANT,
+  ADD_PARTICIPANT,
+  EDIT_PARTICIPANT,
+  EDIT_PARTICIPANT_CANCEL,
+  SAVE_PARTICIPANT,
+} from '../constants/CON_participants';
 
 
 function getParticipantsFunc(queryBuilder, dispatch, type) {
-  let participantsArray = [];
-
   queryBuilder.setSortBy(['created DESC']);
   queryBuilder.setPageSize(12);
 
   Backendless.Data
     .of('Participants')
     .find(queryBuilder)
-    .then((receivedData) => {
-      participantsArray = receivedData.map(item => item);
-
+    .then((receivedParticipants) => {
       dispatch({
-        type: type,
-        payload: participantsArray,
+        type,
+        payload: receivedParticipants,
       });
     });
 }

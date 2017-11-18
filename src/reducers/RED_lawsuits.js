@@ -1,4 +1,7 @@
-import { GET_LAWSUITS_SUCCESS, FIND_LAWSUITS } from '../constants/CON_lawsuits';
+import {
+  GET_LAWSUITS_SUCCESS,
+  FIND_LAWSUITS,
+} from '../constants/CON_lawsuits';
 
 
 const initialState = {};

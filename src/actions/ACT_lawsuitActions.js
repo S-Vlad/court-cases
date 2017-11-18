@@ -1,19 +1,18 @@
-import { GET_LAWSUITS_SUCCESS, FIND_LAWSUITS } from '../constants/CON_lawsuits';
+import {
+  GET_LAWSUITS_SUCCESS,
+  FIND_LAWSUITS,
+} from '../constants/CON_lawsuits';
 import Backendless from '../backendless';
 
 
 function getLawsuitsFunc(queryBuilder, dispatch, type) {
-  let lawsuitsArray = [];
-
   Backendless.Data
     .of('Lawsuit')
     .find(queryBuilder)
-    .then((receivedData) => {
-      lawsuitsArray = receivedData.map(item => item);
-
+    .then((receivedLawsuits) => {
       dispatch({
-        type: type,
-        payload: lawsuitsArray,
+        type,
+        payload: receivedLawsuits,
       });
     });
 }
