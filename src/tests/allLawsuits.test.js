@@ -17,7 +17,7 @@ describe('all-lawsuits', () => {
     expectValue('Завершено');
   });
 
-  it('should find lawsuits', () => {
+  it('should find lawsuit', () => {
     $('#search-field').sendKeys('Заве');
     $('.search-button').click();
 

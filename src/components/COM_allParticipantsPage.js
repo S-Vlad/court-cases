@@ -46,7 +46,7 @@ export default class AllParticipantsPage extends Component {
     }
   }
 
-  editClickHandler(participantId) {
+  editClickHandler = participantId => () => {
     this.props.editParticipant(participantId);
   }
 
@@ -126,7 +126,7 @@ export default class AllParticipantsPage extends Component {
         return (
           <tr key={item.objectId}>
             <td
-              onDoubleClick={this.editClickHandler.bind(this, item.objectId)}>
+              onDoubleClick={this.editClickHandler(item.objectId)}>
               {item.name}
             </td>
             <td

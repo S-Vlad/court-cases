@@ -12,8 +12,7 @@ const mapDispatchToProps = dispatch => ({
   documentActions: bindActionCreators(documentActions, dispatch),
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Documents extends Component {
+class Documents extends Component {
   static propTypes = {
     documents: PropTypes.object.isRequired,
     documentActions: PropTypes.shape({
@@ -56,3 +55,5 @@ export default class Documents extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Documents);

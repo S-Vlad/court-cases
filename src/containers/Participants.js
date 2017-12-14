@@ -13,8 +13,7 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Participants extends Component {
+class Participants extends Component {
   static propTypes = {
     participants: PropTypes.object.isRequired,
     participantActions: PropTypes.shape({
@@ -51,3 +50,5 @@ export default class Participants extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Participants);

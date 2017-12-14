@@ -15,8 +15,7 @@ const mapDispatchToProps = dispatch => ({
   lawsuitActions: bindActionCreators(lawsuitActions, dispatch),
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Lawsuits extends Component {
+class Lawsuits extends Component {
   static propTypes = {
     lawsuits: PropTypes.object.isRequired,
     location: PropTypes.shape({
@@ -66,3 +65,5 @@ export default class Lawsuits extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lawsuits);
